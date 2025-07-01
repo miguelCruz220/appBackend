@@ -1,0 +1,157 @@
+/* Por defecto, la etiqueta html tiene un tamaño de fuente de 16px. Así, 1rem equivale a 16px */
+.titulo {
+  color: #f00;
+  text-align: center;
+  border: 0.2rem solid #00f;
+  padding: 10px;
+  border-radius: 5px;
+  text-shadow: 3px 5px 5px #0f0;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+* {
+  font-size: 20px;
+}
+
+.list-contacts{
+/*   background-color: #76aaaf;
+  background-image: url('/public/coffee.png');
+  height: 300px;
+  background-repeat: no-repeat;
+  background-position: right bottom; */
+  height: 220px;
+  width: 300px;
+  padding: 20px;
+  background: #76aaaf url('/public/guitarra.png')  no-repeat left bottom / 100px 100px;
+  overflow: scroll;
+  list-style-type: none;
+}
+
+.sub-add{
+  background-color: chocolate;
+  margin: 15px;
+  padding: 30px 25px 20px 15px;
+  border: solid 1px black;
+  height: 40px;
+  width: 30px;
+  overflow: hidden;
+}
+
+li {
+  margin-bottom: 50px;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: red;
+}
+
+
+/*Los estados del link se seleccionan en el siguiente orden */
+
+/*cuando el link no ha sido visitado*/
+a:link{
+  color: blueviolet;
+}
+
+/*cuando el link ya ha sido visitado*/
+a:visited{
+  color: gray;
+}
+
+/*cuando el mouse se está pasando por encima del link*/
+a:hover{
+  color: yellow;
+}
+
+/*cuando el link está siendo presionado*/
+a:active{
+  color: red;
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: solid 1px #999;
+  padding: 5px;
+}
+
+th {
+  background-color: tomato;
+  color: white;
+  text-align: left;
+}
+
+
+tr:nth-child(even){
+  background-color: #eee;
+}
+
+
+tr:hover{
+  background-color: #aaa;
+  cursor: pointers;
+}
+
+span{
+  display: block;
+  /* display: none; Oculta: no se ven y tampoco ocupan espacio  */
+  /* visibility: hidden;  Como si hiciera transparente la etiqueta; no se ve, pero siguen ocupando espacio*/
+  max-width: 300px;
+  background-color: red;
+}
+
+
+#position {
+  position: sticky;
+  left: 20px;
+  top: 25px
+}
+
+.left {
+  float: left;
+  width: 200px;
+  height: 200px;
+}
+
+.right {
+  float: left;
+  margin-left: 10px;
+}
+
+.container{
+  height: 200px;
+  margin-top: 10px;
+}
+
+.card-right{
+  float: right;
+  margin: 0;
+  padding: 0;
+  width: 33.3%;
+}
+
+
+.inline {
+  display: inline;
+  margin-right: 5px;
+  background-color: red;
+  /* width: 30px;
+  height: 50px; En este caso, no se le puede asignar ni altura ni ancho*/
+}
+
+.inline-block {
+  display: inline-block;
+  background-color: #00f;
+  width: 50%;
+  height: 50px;
+}
+
+.center{
+  padding: 50px 0;
+  text-align: center;
+  width: 200px;
+  margin: 10px auto;
+  background-color: aqua;
+}

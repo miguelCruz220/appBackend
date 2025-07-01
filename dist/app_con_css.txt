@@ -1,0 +1,132 @@
+import { useState, useEffect } from "react"
+import axios from "axios"
+const baseUrl = 'http://localhost:3001/api/persons'
+
+const App = () => {
+  const [ allPersons, setAllPersons ] = useState([])
+  const [ inputBuscar, setInputBuscar ] = useState({
+    valor: '',
+    deshabilitado: true
+  })
+  const [ clickAdd, setClickAdd ] = useState(0)
+  const [ newContact, setNewContact ] = useState({
+    name: "",
+    number: ""
+  })
+
+  useEffect(() => {
+    axios.get(baseUrl)
+      .then(response => {
+        setAllPersons(response.data)
+      })
+  }, []) 
+
+  useEffect(() => {
+    if (!clickAdd) return 
+
+    axios.post(baseUrl, newContact)
+      .then(response => {
+        setAllPersons(prev => prev.concat(response.data))
+        setNewContact({name:"", number: ""})
+      })
+      .catch(error => {
+        if (error.response && error.response.data && error.response.data.error){
+          alert("Error al añadir contacto: " + error.response.data.error)
+        } else{
+          alert("Error inesperado. No se pudo ejecutar su solicitud")
+        }
+        console.log(("Error al añadir contacto: ", error))
+        setNewContact({name:"", number: ""})
+      })
+  }, [clickAdd])
+
+  const handleSubmitButton = (event) => {
+    event.preventDefault()
+    setInputBuscar({...inputBuscar, deshabilitado: !inputBuscar.deshabilitado})
+  }
+
+  const handleInputBuscar = (event) => {
+    setInputBuscar({...inputBuscar, valor: event.target.value})
+  }
+
+  const handleAddContact = (event) => {
+    event.preventDefault()
+    setClickAdd(clickAdd + 1)
+  }
+
+  const handleChangeContact = (event) => {
+    const {name, value} = event.target
+    setNewContact({...newContact, [name]:value})
+  }
+
+  const handleClickEliminar = async (id) => {
+    console.log("click en botón de eliminar del usuario", id)
+    try {
+      await axios.delete(baseUrl + `/${id}`)
+      setAllPersons(prev => prev.filter(person => person.id !== id))
+    } catch (error) {
+      console.error("Ocurrió un error al eliminar el contacto:", error)
+      alert("Ocurrió un problema al eliminar el contaco. Inténtelo de nuevo")
+    }
+  }
+
+  const showContacts = inputBuscar.deshabilitado
+    ? allPersons
+    : allPersons.filter(person => person.name.toLowerCase().includes(inputBuscar.valor.toLowerCase()))
+
+  return (
+    <>
+    <section className="center">
+      <p>Hola mundo</p>
+    </section>
+    <div className="inline" >lala</div>
+    <div className="inline-block" >lele</div>
+    <div className="container">
+      <article className="card-right">1</article>
+      <article className="card-right">2</article>
+      <article className="card-right">3</article>
+    </div>
+    <div className="container">
+      <img src="/public/coffee.png" className="left"/>
+      <p className="right">derecha</p>
+    </div>
+    <article id="position">Soy prop de posición</article>
+    <span>span 1</span>
+    <span>span 2</span>
+    <a href="https://www.youtube.com/@HolaMundoDev">Canal del Chanchito Feliz</a>
+    <h1 className="titulo">Agenda telefónica</h1>
+    <form onSubmit={handleSubmitButton}>
+      buscar contacto: <input disabled ={inputBuscar.deshabilitado} value={inputBuscar.valor} onChange={handleInputBuscar}/>
+      <button type="submit">{inputBuscar.deshabilitado ? 'Habilitar' : 'deshabilitar'}</button>
+    </form>
+    <h2 className="sub-add" >Añadir contacto</h2>
+    <form onSubmit={handleAddContact}>
+      <div> Nombre:   <input name="name" value={newContact.name} onChange={handleChangeContact} /> </div>
+      <div> Teléfono: <input name="number" value={newContact.number} onChange={handleChangeContact} /> </div>
+      <div> <button type="submit" >Añadir</button> </div>
+    </form>
+    <h2>Contactos</h2>
+    {<ul className="list-contacts" >{showContacts.map(person => <li key={person.id}>Nombre: {person.name}. Teléfono: {person.number} <button onClick={() => handleClickEliminar(person.id)}>Eliminar</button></li>)}</ul>}
+    <table>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+      </tr>
+      <tr>
+        <td>Nicolas</td>
+        <td>Schurmann</td>
+      </tr>
+      <tr>
+        <td>Chanchito</td>
+        <td>Feliz</td>
+      </tr>
+      <tr>
+        <td>Felipe</td>
+        <td>Triste</td>
+      </tr>
+    </table>
+    </>
+  )
+}
+
+export default App
